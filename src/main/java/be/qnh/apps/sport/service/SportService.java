@@ -48,8 +48,11 @@ public class SportService {
       
       Iterable<Sport> sports = this.repo.findAll();
       
-      
-      
       return sports;
+   }
+   
+   public Sport findById(long id) {
+      
+      return this.repo.findOne(id);
    }
 }
