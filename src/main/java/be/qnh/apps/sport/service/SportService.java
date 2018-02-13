@@ -41,6 +41,10 @@ public class SportService {
 
    }
    
+   public Sport insert(Sport sport) {
+      return this.repo.save(sport);
+   }
+   
    
    public Iterable<Sport> getAll() {
       
