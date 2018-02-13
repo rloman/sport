@@ -55,4 +55,8 @@ public class SportService {
       
       return this.repo.findOne(id);
    }
+   
+   public void deleteById(long id) {
+      this.repo.delete(id);
+   }
 }

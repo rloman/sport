@@ -4,6 +4,7 @@ package be.qnh.apps.sport.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,5 +39,14 @@ public class SportEndpoint {
        Sport result = this.service.findById(id);
        
        return result != null ?  new ResponseEntity<Sport>(result, HttpStatus.OK) : new ResponseEntity<Sport>(HttpStatus.NOT_FOUND);
+    }
+    
+//    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("{id}")
+    public ResponseEntity<Sport> deleteById(@PathVariable long id) {
+       
+       this.service.deleteById(id);
+       
+       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
