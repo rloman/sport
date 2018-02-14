@@ -41,6 +41,26 @@ public class SportService {
 
    }
    
+   public Sport insert(Sport sport) {
+      return this.repo.save(sport);
+   }
+   
+   
+   public Sport update(long id, Sport sportIn) {
+      
+      Sport victim = this.repo.findOne(id);
+      
+      if(victim != null) {
+         victim.setName(sportIn.getName());
+         victim.setMixed(sportIn.isMixed());
+         
+         return this.repo.save(victim);
+      }
+      else {
+         return null;
+      }
+      
+   }
    
    public Iterable<Sport> getAll() {
       
@@ -48,8 +68,15 @@ public class SportService {
       
       Iterable<Sport> sports = this.repo.findAll();
       
-      
-      
       return sports;
+   }
+   
+   public Sport findById(long id) {
+      
+      return this.repo.findOne(id);
+   }
+   
+   public void deleteById(long id) {
+      this.repo.delete(id);
    }
 }
