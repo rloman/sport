@@ -42,6 +42,19 @@ public class SportEndpoint {
        return result != null ?  new ResponseEntity<Sport>(result, HttpStatus.OK) : new ResponseEntity<Sport>(HttpStatus.NOT_FOUND);
     }
     
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Sport> putById(@PathVariable long id, @RequestBody Sport sport) {
+
+       Sport sportAfterUpdating = this.service.update(id, sport);
+
+       if (sportAfterUpdating != null) {
+          return new ResponseEntity<Sport>(sportAfterUpdating, HttpStatus.OK);
+       }
+       else {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
+    }
+    
 //    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @DeleteMapping("{id}")
     public ResponseEntity<Sport> deleteById(@PathVariable long id) {
