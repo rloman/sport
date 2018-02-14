@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import be.qnh.apps.sport.SportRepository;
+import be.qnh.apps.sport.domain.Company;
 import be.qnh.apps.sport.domain.Sport;
 
 @Service
@@ -17,6 +18,9 @@ public class SportService {
    
    @Autowired
    private SportRepository repo;
+   
+   @Autowired
+   private Company company;
    
    @PostConstruct
    public void init() {
@@ -38,11 +42,12 @@ public class SportService {
       this.repo.save(sport3);
       
       this.repo.save(Arrays.asList(sport1, sport2, sport3));
-
    }
    
    public Sport insert(Sport sport) {
-      return this.repo.save(sport);
+      Sport result = this.repo.save(sport);
+      
+      throw new NullPointerException();
    }
    
    
@@ -73,7 +78,11 @@ public class SportService {
    
    public Sport findById(long id) {
       
-      return this.repo.findOne(id);
+      Sport sport = this.repo.findOne(id);
+      
+      System.err.println("Getting sport for company "+company.getName());
+      
+      return sport;
    }
    
    public void deleteById(long id) {
