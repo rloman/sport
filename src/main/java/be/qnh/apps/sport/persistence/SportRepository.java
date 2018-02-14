@@ -1,4 +1,4 @@
-package be.qnh.apps.sport;
+package be.qnh.apps.sport.persistence;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

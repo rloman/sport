@@ -7,9 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import be.qnh.apps.sport.SportRepository;
 import be.qnh.apps.sport.domain.Company;
 import be.qnh.apps.sport.domain.Sport;
+import be.qnh.apps.sport.persistence.SportRepository;
 
 @Service
 public class SportService {
