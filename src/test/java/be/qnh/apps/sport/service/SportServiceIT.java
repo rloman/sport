@@ -16,7 +16,7 @@ import be.qnh.apps.sport.domain.Sport;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("integrationtest")
 @SpringBootTest(classes=SportApplication.class, webEnvironment=WebEnvironment.RANDOM_PORT)
-public class SportServiceTest {
+public class SportServiceIT {
    
    @Autowired
    private SportService sportService;
