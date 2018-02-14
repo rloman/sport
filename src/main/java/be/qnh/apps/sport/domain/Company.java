@@ -1,12 +1,8 @@
 package be.qnh.apps.sport.domain;
 
-import java.io.Serializable;
-
 import org.springframework.beans.factory.annotation.Value;
 
-public class Company implements Serializable{
-   
-   private static final long serialVersionUID = -3414266657804730362L;
+public class Company {
    
    @Value("${company.name}")
    private String name;
