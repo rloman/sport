@@ -2,7 +2,6 @@ package be.qnh.apps.sport.service;
 
 import java.util.Arrays;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import be.qnh.apps.sport.domain.Company;
 import be.qnh.apps.sport.domain.Sport;
 
 @Service
-@Transactional
 public class SportService {
    
    @Autowired
@@ -22,7 +20,7 @@ public class SportService {
    @Autowired
    private Company company;
    
-   @PostConstruct
+//   @PostConstruct
    public void init() {
       Sport sport1 = new Sport();
       sport1.setName("Voetbal");
@@ -44,13 +42,14 @@ public class SportService {
       this.repo.save(Arrays.asList(sport1, sport2, sport3));
    }
    
+   @Transactional
    public Sport insert(Sport sport) {
       Sport result = this.repo.save(sport);
       
-      throw new NullPointerException();
+      return result;
    }
    
-   
+   @Transactional
    public Sport update(long id, Sport sportIn) {
       
       Sport victim = this.repo.findOne(id);
@@ -69,8 +68,6 @@ public class SportService {
    
    public Iterable<Sport> getAll() {
       
-      init();
-      
       Iterable<Sport> sports = this.repo.findAll();
       
       return sports;
@@ -85,6 +82,7 @@ public class SportService {
       return sport;
    }
    
+   @Transactional
    public void deleteById(long id) {
       this.repo.delete(id);
    }
