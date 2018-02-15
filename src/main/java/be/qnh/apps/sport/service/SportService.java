@@ -88,6 +88,7 @@ public class SportService {
       Sport sport = this.repo.findOne(id);
       
       System.err.println("Getting sport for company "+company.getName());
+      System.err.println(company.hashCode());
       
       return sport;
    }
