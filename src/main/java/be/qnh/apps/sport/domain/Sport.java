@@ -40,7 +40,8 @@ public class Sport implements Serializable {
         this.name = name;
     }
 
-   
-   
-  
+   @Override
+   public String toString() {
+      return "Sport [id=" + id + ", name=" + name + "]";
+   }
 }

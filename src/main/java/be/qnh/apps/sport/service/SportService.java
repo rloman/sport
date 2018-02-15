@@ -4,7 +4,10 @@ import java.util.Arrays;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import be.qnh.apps.sport.domain.Company;
@@ -14,13 +17,15 @@ import be.qnh.apps.sport.persistence.SportRepository;
 @Service
 public class SportService {
    
+   private static final Logger LOGGER = LoggerFactory.getLogger(SportService.class);
+   
    @Autowired
    private SportRepository repo;
    
    @Autowired
    private Company company;
    
-//   @PostConstruct
+   @Scheduled(cron="*/15 * * * * *")
    public void init() {
       Sport sport1 = new Sport();
       sport1.setName("Voetbal");
@@ -38,6 +43,8 @@ public class SportService {
       this.repo.save(sport1);
       this.repo.save(sport2);
       this.repo.save(sport3);
+      
+      LOGGER.info("Add Sport [{}] and [{}] and [{}]", sport1, sport2, sport3 );
       
       this.repo.save(Arrays.asList(sport1, sport2, sport3));
    }
