@@ -43,6 +43,6 @@ public class SportServiceTest {
       Assert.assertTrue(resultFromService.isMixed());
       
       Mockito.verify(this.repo).findOne(3L);
-      Mockito.verify(this.repo, Mockito.times(3)).findOne(3L); // the same but explicit one call
+      Mockito.verify(this.repo, Mockito.times(1)).findOne(3L); // the same but explicit one call
    }
 }
