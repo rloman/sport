@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Sport implements Serializable {
 
@@ -42,7 +40,8 @@ public class Sport implements Serializable {
         this.name = name;
     }
 
-   
-   
-  
+   @Override
+   public String toString() {
+      return "Sport [id=" + id + ", name=" + name + "]";
+   }
 }
