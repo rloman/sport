@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -90,7 +91,18 @@ public class SportService {
    }
    
    @Transactional
-   public void deleteById(long id) {
-      this.repo.delete(id);
+   public boolean deleteById(long id) {
+      if(this.repo.exists(id)) {
+         try {
+            this.repo.delete(id);
+            
+            return true;
+         }
+         // in case of removing between this 1 ms
+         catch(EmptyResultDataAccessException emptyException){
+            LOGGER.warn("Entity removed between checking if existing and removing, no worries but this should not happen every day :-)");
+         }
+      }
+      return false;
    }
 }
