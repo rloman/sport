@@ -72,11 +72,11 @@ public class SportServiceIT {
       
       Assert.assertEquals("Schaken en Dammen", opgehaaldNaSaven.getName());
       
-      this.sportService.deleteById(id);
+      Assert.assertTrue(this.sportService.deleteById(id));
       
       Assert.assertNull(this.sportService.findById(id));
       
-      this.sportService.deleteById(id);
+      Assert.assertFalse(this.sportService.deleteById(id));
       
    }
 }
