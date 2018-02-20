@@ -114,4 +114,10 @@ public class SportService {
    public void deleteAllSports() {
       this.repo.deleteAllSports();
    }
+
+   @Transactional
+   public void setAllSportsToVoetbal() {
+      this.repo.setAllSportsToVoetbal();
+      
+   }  
 }

@@ -22,5 +22,8 @@ public interface SportRepository extends CrudRepository<Sport, Long> {
    @Modifying
    public void deleteAllSports();
    
+   @Query("update Sport set name='voetbal'")
+   @Modifying
+   public void setAllSportsToVoetbal();
    
 }

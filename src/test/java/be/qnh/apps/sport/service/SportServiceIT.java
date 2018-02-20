@@ -76,12 +76,10 @@ public class SportServiceIT {
       Assert.assertNull(this.sportService.findById(id));
 
       Assert.assertFalse(this.sportService.deleteById(id));
-
    }
 
    @Test
    public void testDeleteAllUsingAtQueryAnnotation() {
-
       for (int i = 0; i < 3; i++) {
          Sport nieuwe = new Sport();
          nieuwe.setMixed(true);
@@ -95,7 +93,27 @@ public class SportServiceIT {
      this.sportService.deleteAllSports();
      
      Assert.assertEquals(0, this.sportService.count());
-      
+   }
+   
+   @Test
+   public void testSetAllSportsToVoetbal() {
 
+      for (int i = 0; i < 3; i++) {
+         Sport nieuwe = new Sport();
+         nieuwe.setMixed(true);
+         nieuwe.setName("Schaken");
+
+         this.sportService.insert(nieuwe);
+      }
+      
+     Assert.assertEquals(3, this.sportService.count());
+     
+     this.sportService.setAllSportsToVoetbal();
+     
+     this.sportService.getAll().forEach(s -> {
+        Assert.assertEquals("voetbal", s.getName());
+     });
+     
+     Assert.assertEquals(3, this.sportService.count());
    }
 }
