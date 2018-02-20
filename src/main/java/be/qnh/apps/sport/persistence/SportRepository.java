@@ -1,5 +1,7 @@
 package be.qnh.apps.sport.persistence;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,10 @@ public interface SportRepository extends CrudRepository<Sport, Long> {
    Iterable<Sport> findByMixed(boolean mixed);
 
    Iterable<Sport> findAllByOrderByNameAsc();
+   
+   @Query("delete from Sport")
+   @Modifying
+   public void deleteAllSports();
+   
    
 }
