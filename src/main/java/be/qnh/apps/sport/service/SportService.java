@@ -105,4 +105,19 @@ public class SportService {
       }
       return false;
    }
+   
+   public long count() {
+      return this.repo.count();
+   }
+   
+   @Transactional
+   public void deleteAllSports() {
+      this.repo.deleteAllSports();
+   }
+
+   @Transactional
+   public void setAllSportsToVoetbal() {
+      this.repo.setAllSportsToVoetbal();
+      
+   }  
 }
