@@ -80,6 +80,7 @@ public class SportServiceIT {
 
    @Test
    public void testDeleteAllUsingAtQueryAnnotation() {
+      this.sportService.deleteAllSports();
       for (int i = 0; i < 3; i++) {
          Sport nieuwe = new Sport();
          nieuwe.setMixed(true);

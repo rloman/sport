@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import be.qnh.apps.sport.domain.Company;
 import be.qnh.apps.sport.domain.Sport;
+import be.qnh.apps.sport.domain.Voetbal;
+import be.qnh.apps.sport.domain.Volleybal;
 import be.qnh.apps.sport.persistence.SportRepository;
 
 @Service
@@ -28,7 +30,7 @@ public class SportService {
    
    @Scheduled(cron="*/15 * * * * *")
    public void init() {
-      Sport sport1 = new Sport();
+      Sport sport1 = new Voetbal();
       sport1.setName("Voetbal");
       sport1.setMixed(false);
 
@@ -37,7 +39,7 @@ public class SportService {
       sport2.setMixed(true);
 
 
-      Sport sport3 = new Sport();
+      Sport sport3 = new Volleybal();
       sport3.setName("Volleybal");
       sport3.setMixed(false);
       
@@ -45,9 +47,9 @@ public class SportService {
       this.repo.save(sport2);
       this.repo.save(sport3);
       
-      LOGGER.info("Add Sport [{}] and [{}] and [{}]", sport1, sport2, sport3 );
-      
       this.repo.save(Arrays.asList(sport1, sport2, sport3));
+      
+      LOGGER.info("Add Sport [{}] and [{}] and [{}]", sport1, sport2, sport3 );
    }
    
    @Transactional

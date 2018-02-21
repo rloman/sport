@@ -1,28 +1,18 @@
 package be.qnh.apps.sport.domain;
 
-import java.io.Serializable;
-
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
-public class Sport implements Serializable {
+@DiscriminatorValue("sport")
+public class Sport extends AbstractEntity {
 
-   private static final long serialVersionUID = 6484517974939161707L;
+   private static final long serialVersionUID = -5297029710836360582L;
 
-   @Id
-   @GeneratedValue(strategy=GenerationType.AUTO)
-   private long id;
-   
-    private String name;
+   private String name;
 
     private boolean mixed;
 
- public long getId() {
-      return id;
-   }
     
     public boolean isMixed() {
         return mixed;
@@ -42,6 +32,6 @@ public class Sport implements Serializable {
 
    @Override
    public String toString() {
-      return "Sport [id=" + id + ", name=" + name + "]";
+      return "Sport [id=" +getId() + ", name=" + getName() + "]";
    }
 }
