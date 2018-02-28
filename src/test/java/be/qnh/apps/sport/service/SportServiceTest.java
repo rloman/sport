@@ -45,4 +45,24 @@ public class SportServiceTest {
       Mockito.verify(this.repo).findOne(3L);
       Mockito.verify(this.repo, Mockito.times(1)).findOne(3L); // the same but explicit one call
    }
+
+   @Test
+   public void testFindByIdFailWithException() {
+
+      Sport resultFromRepo = new Sport();
+      resultFromRepo.setMixed(true);
+      resultFromRepo.setName("Curling");
+
+
+      // instruct the mock of the repo what to do
+      Mockito.when(this.repo.findOne(-1L)).thenThrow(new IllegalArgumentException());
+
+      // mocking done
+      Sport resultFromService = this.sportService.findById(-1);
+
+      Assert.assertNull(resultFromService);
+
+      Mockito.verify(this.repo).findOne(-1L);
+      Mockito.verify(this.repo, Mockito.times(1)).findOne(-1L); // the same but explicit one call
+   }
 }
