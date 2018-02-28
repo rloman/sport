@@ -1,9 +1,10 @@
 package be.qnh.apps.sport.service;
 
-import java.util.Arrays;
-
-import javax.transaction.Transactional;
-
+import be.qnh.apps.sport.domain.Company;
+import be.qnh.apps.sport.domain.Sport;
+import be.qnh.apps.sport.domain.Voetbal;
+import be.qnh.apps.sport.domain.Volleybal;
+import be.qnh.apps.sport.persistence.SportRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import be.qnh.apps.sport.domain.Company;
-import be.qnh.apps.sport.domain.Sport;
-import be.qnh.apps.sport.domain.Voetbal;
-import be.qnh.apps.sport.domain.Volleybal;
-import be.qnh.apps.sport.persistence.SportRepository;
+import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class SportService {
@@ -63,6 +62,12 @@ public class SportService {
    public Sport update(long id, Sport sportIn) {
       
       Sport victim = this.repo.findOne(id);
+
+      List<Integer> someNumbers = Arrays.asList(1,2,3,4,5,6,7);
+
+      someNumbers.stream().filter(n -> n%2 ==0).forEach(n -> {
+         System.out.println(n);
+      });
       
       if(victim != null) {
          victim.setName(sportIn.getName());
