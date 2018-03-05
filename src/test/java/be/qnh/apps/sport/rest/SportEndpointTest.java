@@ -36,24 +36,26 @@ public class SportEndpointTest {
     private MockMvc mockMvc;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(this.sportEndpoint).build();
     }
 
     @Test
     public void addSportTest() throws Exception {
         Sport sport = new Sport(3L);
+        sport.setName("Volleybal");
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sport);
 
-        Mockito.when(this.sportService.insert(Mockito.any(Sport.class) )).thenReturn(sport);
+        Mockito.when(this.sportService.insert(Mockito.any(Sport.class))).thenReturn(sport);
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/api/sports")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is((int)sport.getId())))
-               .andExpect(MockMvcResultMatchers.status().isCreated() // good to fail which should be 201 (Created) #nice
-        );
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is((int) sport.getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.is(sport.getName())))
+                .andExpect(MockMvcResultMatchers.status().isCreated() // good to fail which should be 201 (Created) #nice
+                );
     }
 
 }
