@@ -1,5 +1,7 @@
 package be.qnh.apps.sport.domain;
 
+import org.apache.tomcat.util.net.AbstractEndpoint;
+
 import java.io.Serializable;
 
 import javax.persistence.DiscriminatorColumn;
@@ -17,6 +19,14 @@ public abstract class AbstractEntity implements Serializable{
    @Id
    @GeneratedValue(strategy=GenerationType.AUTO)
    private long id;
+
+   public AbstractEntity() {
+
+   }
+
+   public AbstractEntity(long id) {
+      this.id = id;
+   }
 
    
    public long getId() {

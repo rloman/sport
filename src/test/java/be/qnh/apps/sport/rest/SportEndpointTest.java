@@ -42,16 +42,16 @@ public class SportEndpointTest {
 
     @Test
     public void addSportTest() throws Exception {
-        Sport sport = new Sport();
+        Sport sport = new Sport(3L);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sport);
 
-        Mockito.when(this.sportService.insert(sport)).thenReturn(sport);
+        Mockito.when(this.sportService.insert(Mockito.any(Sport.class) )).thenReturn(sport);
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/api/sports")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is("1")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is((int)sport.getId())))
                .andExpect(MockMvcResultMatchers.status().isCreated() // good to fail which should be 201 (Created) #nice
         );
     }

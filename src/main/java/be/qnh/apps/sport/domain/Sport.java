@@ -9,6 +9,14 @@ public class Sport extends AbstractEntity {
 
    private static final long serialVersionUID = -5297029710836360582L;
 
+   public Sport() {
+
+   }
+
+   public Sport(long id) {
+       super(id);
+   }
+
    private String name;
 
     private boolean mixed;
