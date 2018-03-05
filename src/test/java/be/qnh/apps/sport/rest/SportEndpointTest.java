@@ -3,6 +3,7 @@ package be.qnh.apps.sport.rest;
 import be.qnh.apps.sport.domain.Sport;
 import be.qnh.apps.sport.service.SportService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -24,7 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SportControllerTest {
+public class SportEndpointTest {
 
     @InjectMocks
     private SportEndpoint sportEndpoint;
@@ -50,7 +51,8 @@ public class SportControllerTest {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/api/sports")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk() // good to fail which should be 201 (Created) #nice
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is("1")))
+               .andExpect(MockMvcResultMatchers.status().isCreated() // good to fail which should be 201 (Created) #nice
         );
     }
 
