@@ -3,7 +3,6 @@ package be.qnh.apps.sport.rest;
 import be.qnh.apps.sport.domain.Sport;
 import be.qnh.apps.sport.service.SportService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -16,10 +15,24 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+/*
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+ */
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,14 +60,14 @@ public class SportEndpointTest {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sport);
 
-        Mockito.when(this.sportService.insert(Mockito.any(Sport.class))).thenReturn(sport);
+        Mockito.when(this.sportService.insert(any(Sport.class))).thenReturn(sport);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/api/sports")
+        this.mockMvc.perform(post("/api/sports")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(json)).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Is.is((int) sport.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.is(sport.getName())))
-                .andExpect(MockMvcResultMatchers.status().isCreated() // good to fail which should be 201 (Created) #nice
+                .content(json)).andDo(print())
+                .andExpect(jsonPath("$.id", is((int) sport.getId())))
+                .andExpect(jsonPath("$.name", is(sport.getName())))
+                .andExpect(status().isCreated()
                 );
     }
 
