@@ -67,6 +67,7 @@ public class SportEndpointTest {
                 .content(json)).andDo(print())
                 .andExpect(jsonPath("$.id", is(Long.valueOf(sport.getId()).intValue())))
                 .andExpect(jsonPath("$.name", is(sport.getName())))
+                .andExpect(jsonPath("$.mixed", is(sport.isMixed())))
                 .andExpect(status().isCreated()
                 );
     }
