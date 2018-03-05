@@ -65,7 +65,7 @@ public class SportEndpointTest {
         this.mockMvc.perform(post("/api/sports")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andDo(print())
-                .andExpect(jsonPath("$.id", is((int) sport.getId())))
+                .andExpect(jsonPath("$.id", is(Long.valueOf(sport.getId()).intValue())))
                 .andExpect(jsonPath("$.name", is(sport.getName())))
                 .andExpect(status().isCreated()
                 );
