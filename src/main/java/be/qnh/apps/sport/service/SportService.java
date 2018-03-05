@@ -57,6 +57,10 @@ public class SportService {
       
       return result;
    }
+
+   public Iterable<Sport> findByName(String name) {
+      return this.repo.findByName(name);
+   }
    
    @Transactional
    public Sport update(long id, Sport sportIn) {
