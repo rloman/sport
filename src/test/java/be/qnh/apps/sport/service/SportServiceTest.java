@@ -1,5 +1,8 @@
 package be.qnh.apps.sport.service;
 
+import be.qnh.apps.sport.domain.Company;
+import be.qnh.apps.sport.domain.Sport;
+import be.qnh.apps.sport.persistence.SportRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,10 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import be.qnh.apps.sport.domain.Company;
-import be.qnh.apps.sport.domain.Sport;
-import be.qnh.apps.sport.persistence.SportRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SportServiceTest {
@@ -58,9 +57,13 @@ public class SportServiceTest {
       Mockito.when(this.repo.findOne(-1L)).thenThrow(new IllegalArgumentException());
 
       // mocking done
-      Sport resultFromService = this.sportService.findById(-1);
-
-      Assert.assertNull(resultFromService);
+      try {
+         Sport resultFromService = this.sportService.findById(-1);
+         Assert.fail();
+      }
+      catch(IllegalArgumentException iae) {
+         //OK
+      }
 
       Mockito.verify(this.repo).findOne(-1L);
       Mockito.verify(this.repo, Mockito.times(1)).findOne(-1L); // the same but explicit one call

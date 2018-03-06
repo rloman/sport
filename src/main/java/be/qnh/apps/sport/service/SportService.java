@@ -99,10 +99,9 @@ public class SportService {
       }
       catch(IllegalArgumentException iae) {
          LOGGER.error("That went pretty wrong");
+
+         throw iae;
       }
-
-      return null;
-
    }
    
    @Transactional
