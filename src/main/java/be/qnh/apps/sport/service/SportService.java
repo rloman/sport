@@ -89,13 +89,19 @@ public class SportService {
    }
    
    public Sport findById(long id) {
-      
-      Sport sport = this.repo.findOne(id);
-      
-      System.err.println("Getting sport for company "+company.getName());
-      System.err.println(company.hashCode());
-      
-      return sport;
+      try {
+         Sport sport = this.repo.findOne(id);
+
+         System.err.println("Getting sport for company "+company.getName());
+         System.err.println(company.hashCode());
+
+         return sport;
+      }
+      catch(IllegalArgumentException iae) {
+         LOGGER.error("That went pretty wrong");
+
+         throw iae;
+      }
    }
    
    @Transactional
