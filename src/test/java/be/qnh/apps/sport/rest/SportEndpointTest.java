@@ -36,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SportEndpointTest {
 
