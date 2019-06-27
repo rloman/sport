@@ -25,6 +25,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,7 +58,7 @@ public class SportEndpointTest {
     }
 
     @Test
-    public void addSportTest() throws Exception {
+    public void testAddSport() throws Exception {
         Sport sport = new Sport(3L);
         sport.setName("Volleybal");
         ObjectMapper mapper = new ObjectMapper();
@@ -76,17 +77,97 @@ public class SportEndpointTest {
     }
 
     @Test
-    public void getAllSportsTest() throws Exception {
+    public void testFindOneById() throws Exception {
         Sport sport = new Sport(3L);
         sport.setName("Volleybal");
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(sport);
 
         Mockito.when(this.sportService.findById(3L)).thenReturn(sport);//any(Sport.class))).thenReturn(sport);
 
         this.mockMvc.perform(get("/api/sports/3")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content("")).andDo(print())
+                .andExpect(jsonPath("$.id", is(Long.valueOf(sport.getId()).intValue())))
+                .andExpect(jsonPath("$.name", is(sport.getName())))
+                .andExpect(jsonPath("$.mixed", is(sport.isMixed())))
+                .andExpect(status().isOk()
+                );
+    }
+
+    @Test
+    public void testFindAll() throws Exception {
+
+        // given
+        Sport sport = new Sport(3L);
+        sport.setName("Volleybal");
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(sport);
+
+        List<Sport> sports = new ArrayList<>();
+        sports.add(sport);
+
+
+        Mockito.when(this.sportService.getAll()).thenReturn(sports);
+
+        //when
+        this.mockMvc.perform(get("/api/sports")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("")).andDo(print())
+
+                // then
+                .andExpect(jsonPath("$[0].id", is(Long.valueOf(sport.getId()).intValue())))
+                .andExpect(jsonPath("$[0].name", is(sport.getName())))
+                .andExpect(jsonPath("$[0].mixed", is(sport.isMixed())))
+                .andExpect(status().isOk()
+                );
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+
+        // given
+        Sport sport = new Sport(3L);
+        sport.setName("Volleybal");
+
+        // and
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(sport);
+
+        // and
+        Mockito.when(this.sportService.update(3L, sport)).thenReturn(sport);
+
+        //when
+        this.mockMvc.perform(put("/api/sports/3")
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andDo(print())
+
+                // then
+                .andExpect(jsonPath("$.id", is(Long.valueOf(sport.getId()).intValue())))
+                .andExpect(jsonPath("$.name", is(sport.getName())))
+                .andExpect(jsonPath("$.mixed", is(sport.isMixed())))
+                .andExpect(status().isOk()
+                );
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+
+        // given
+        Sport sport = new Sport(3L);
+        sport.setName("Volleybal");
+
+        // and
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(sport);
+
+        // and
+        Mockito.when(this.sportService.update(3L, sport)).thenReturn(sport);
+
+        //when
+        this.mockMvc.perform(put("/api/sports/3")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)).andDo(print())
+
+                // then
                 .andExpect(jsonPath("$.id", is(Long.valueOf(sport.getId()).intValue())))
                 .andExpect(jsonPath("$.name", is(sport.getName())))
                 .andExpect(jsonPath("$.mixed", is(sport.isMixed())))
