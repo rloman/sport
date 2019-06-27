@@ -152,21 +152,9 @@ public class SportEndpointTest {
     @Test
     public void testDelete() throws Exception {
 
-        // given
-        Sport sport = new Sport(3L);
-        sport.setName("Volleybal");
-
-        // and
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(sport);
-
-        // and
-//        Mockito.when(this.sportService.deleteById(3L));
-
-        //when
         this.mockMvc.perform(delete("/api/sports/3")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(json)).andDo(print())
+                .content("")).andDo(print())
 
                 // then
                 .andExpect(status().isNoContent()
