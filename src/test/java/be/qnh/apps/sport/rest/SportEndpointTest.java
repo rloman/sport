@@ -150,6 +150,30 @@ public class SportEndpointTest {
     }
 
     @Test
+    public void testUpdateWithNonExistingTarget() throws Exception {
+
+        // given
+        Sport sport = new Sport(3L);
+        sport.setName("Volleybal");
+
+        // and
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(sport);
+
+        // and
+        Mockito.when(this.sportService.update(3L, sport)).thenReturn(null);
+
+        //when
+        this.mockMvc.perform(put("/api/sports/3")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)).andDo(print())
+
+                // then
+                .andExpect(status().isNotFound()
+                );
+    }
+
+    @Test
     public void testDelete() throws Exception {
 
         this.mockMvc.perform(delete("/api/sports/3")
