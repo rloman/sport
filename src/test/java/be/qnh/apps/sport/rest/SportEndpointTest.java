@@ -26,6 +26,7 @@ import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -160,18 +161,15 @@ public class SportEndpointTest {
         String json = mapper.writeValueAsString(sport);
 
         // and
-        Mockito.when(this.sportService.update(3L, sport)).thenReturn(sport);
+//        Mockito.when(this.sportService.deleteById(3L));
 
         //when
-        this.mockMvc.perform(put("/api/sports/3")
+        this.mockMvc.perform(delete("/api/sports/3")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andDo(print())
 
                 // then
-                .andExpect(jsonPath("$.id", is(Long.valueOf(sport.getId()).intValue())))
-                .andExpect(jsonPath("$.name", is(sport.getName())))
-                .andExpect(jsonPath("$.mixed", is(sport.isMixed())))
-                .andExpect(status().isOk()
+                .andExpect(status().isNoContent()
                 );
     }
 
