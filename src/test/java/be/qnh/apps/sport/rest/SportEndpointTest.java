@@ -60,16 +60,21 @@ public class SportEndpointTest {
 
     @Test
     public void testAddSport() throws Exception {
+
+        //Given
         Sport sport = new Sport(3L);
         sport.setName("Volleybal");
+
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sport);
 
         Mockito.when(this.sportService.insert(any(Sport.class))).thenReturn(sport);
 
+        //when
         this.mockMvc.perform(post("/api/sports")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andDo(print())
+// then
                 .andExpect(jsonPath("$.id", is(Long.valueOf(sport.getId()).intValue())))
                 .andExpect(jsonPath("$.name", is(sport.getName())))
                 .andExpect(jsonPath("$.mixed", is(sport.isMixed())))

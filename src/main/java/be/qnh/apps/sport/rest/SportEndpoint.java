@@ -32,7 +32,12 @@ public class SportEndpoint {
 
         Sport result = this.service.findById(id);
 
-        return result != null ? new ResponseEntity<Sport>(result, HttpStatus.OK) : new ResponseEntity<Sport>(HttpStatus.NOT_FOUND);
+        if(result != null) {
+            return new ResponseEntity<Sport>(result, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<Sport>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
